@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="project_issue_email_matching" model="ir.actions.server">
+            <field name="name">Project issue email matching</field>
+            <field name="model_id" ref="model_project_issue"/>
+            <field name="state">code</field>
+            <field name="condition">True</field>
+            <field name="sequence">5</field>
+            <field name="code">projects = pool['project.project'].search(cr, uid, [('active','=',True)])
+is_project_found = False
+if projects:
+    for project in pool['project.project'].browse(cr, uid, projects):
+        if project.analytic_account_id.partner_id:
+            project_emails = []
+            if project.analytic_account_id.partner_id.email:
+                project_emails.append(project.analytic_account_id.partner_id.email.lower())
+            for partner in project.analytic_account_id.partner_id.child_ids:
+                if partner.email:
+                    project_emails.append(partner.email.lower())
+            for email in project_emails:
+                if email in obj.email_from.lower():
+                    pool['project.issue'].write(cr,uid,obj.id,{'project_id' : project.id})
+                    pool['project.issue'].write(cr,uid,obj.id,{'email_from' : project.analytic_account_id.partner_id.email.lower()})
+                    is_project_found = True
+                    break
+            if is_project_found:
+                break</field>
+        </record>
+        <record id="project_issue_email_matching_and_email_to_SM" model="ir.actions.server">
+            <field name="name">Project issue email matching + email to SM</field>
+            <field name="model_id" ref="model_project_issue"/>
+            <field name="state">code</field>
+            <field name="condition">True</field>
+            <field name="sequence">5</field>
+            <field name="code">projects = pool['project.project'].search(cr, uid, [('active','=',True)])
+is_project_found = False
+if projects:
+    for project in pool['project.project'].browse(cr, uid, projects):
+        if project.analytic_account_id.partner_id:
+            project_emails = []
+            if project.analytic_account_id.partner_id.email:
+                project_emails.append(project.analytic_account_id.partner_id.email.lower())
+            for partner in project.analytic_account_id.partner_id.child_ids:
+                if partner.email:
+                    project_emails.append(partner.email.lower())
+            for email in project_emails:
+                if email in obj.email_from.lower():
+                    pool['project.issue'].write(cr,uid,obj.id,{'project_id' : project.id})
+                    pool['project.issue'].write(cr,uid,obj.id,{'email_from' : project.analytic_account_id.partner_id.email.lower()})
+                    is_project_found = True
+                    break
+            if is_project_found:
+                break
+teams = pool['account.analytic.account.team'].search(cr, uid, [('name','=','SM')])
+if teams:
+    team = pool['account.analytic.account.team'].browse(cr, uid, teams[0])
+    content = '&lt;p&gt;Hello SMs,&lt;/p&gt;&lt;p&gt;A new ticket has been sent by email to "support".&lt;/p&gt;&lt;p&gt;An issue has been created in Odoo.&lt;/p&gt;&lt;p&gt;Please take some time to check it.&lt;/p&gt;&lt;p&gt;Your Odoo Guru&lt;/p&gt;'
+    content = pool['mail.mail'].unescapeHTML(content)
+    if obj.partner_id and obj.partner_id.name:
+        partner_info = obj.partner_id.name
+    else:
+        partner_info = "UNKNOWN (create new contact in projects partner)"
+    subject = "New issue created from "+ partner_info
+    for user in team.users:
+        if user.email:
+            mail_id = pool['mail.mail'].create(cr, uid, {
+                            'body_html': content,
+                            'subject': subject,
+                            'email_to': user.email,
+                            'email_from': "support@abakusitsolutions.eu",
+                            'state': 'outgoing',
+                            'type': 'email',
+                            'auto_delete': True,
+                        }, context=context)
+            pool['mail.mail'].send(cr, uid, [mail_id], context=context)</field>
+        </record>
+    </data>
+</openerp>
