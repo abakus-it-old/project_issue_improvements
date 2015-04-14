@@ -16,7 +16,6 @@
     This modules adds some functionalities to the issues for AbAKUS. 
 
     Functionalities:
-    ----------------
         - Auto sets the "Assigned" stage when a person is assigned.
         - Adds a due date field.
         - Moves the project field on the upper side.
