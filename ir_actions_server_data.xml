@@ -55,7 +55,7 @@ if projects:
 teams = pool['account.analytic.account.team'].search(cr, uid, [('name','=','SM')])
 if teams:
     team = pool['account.analytic.account.team'].browse(cr, uid, teams[0])
-    content = '&lt;p&gt;Hello SMs,&lt;/p&gt;&lt;p&gt;A new ticket has been sent by email to "support".&lt;/p&gt;&lt;p&gt;An issue has been created in Odoo.&lt;/p&gt;&lt;p&gt;Please take some time to check it.&lt;/p&gt;&lt;p&gt;Your Odoo Guru&lt;/p&gt;'
+    content = '&lt;p&gt;Hello SMs,&lt;/p&gt;&lt;p&gt;A new ticket has been sent by email to "support".&lt;/p&gt;&lt;p&gt;An issue has been created in Odoo.&lt;/p&gt;&lt;p&gt;Please take some time to check it.&lt;/p&gt;&lt;p&gt; Click &lt;a href="https://my.abakusitsolutions.eu/web#id=' + str(obj.id) + '&view_type=form&model=project.issue&menu_id=559&action=738"&gt;here&lt;/a&gt; &lt;/p&gt;&lt;p&gt;Your Odoo Guru&lt;/p&gt;'
     content = pool['mail.mail'].unescapeHTML(content)
     if obj.partner_id and obj.partner_id.name:
         partner_info = obj.partner_id.name
