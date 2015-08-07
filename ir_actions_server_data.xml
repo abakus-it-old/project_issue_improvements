@@ -11,17 +11,18 @@
 is_project_found = False
 if projects:
     for project in pool['project.project'].browse(cr, uid, projects):
-        if project.analytic_account_id.partner_id:
+        if project.analytic_account_id.partner_id and 'bl' in project.analytic_account_id.name.lower():
             project_emails = []
-            if project.analytic_account_id.partner_id.email:
-                project_emails.append(project.analytic_account_id.partner_id.email.lower())
             for partner in project.analytic_account_id.partner_id.child_ids:
                 if partner.email:
-                    project_emails.append(partner.email.lower())
+                    project_emails.append([partner.email.lower(), partner.id])
+            if project.analytic_account_id.partner_id.email:
+                project_emails.append([project.analytic_account_id.partner_id.email.lower(), project.analytic_account_id.partner_id.id])        
             for email in project_emails:
-                if email in obj.email_from.lower():
+                if email[0] in obj.email_from.lower():
                     pool['project.issue'].write(cr,uid,obj.id,{'project_id' : project.id})
-                    pool['project.issue'].write(cr,uid,obj.id,{'email_from' : project.analytic_account_id.partner_id.email.lower()})
+                    pool['project.issue'].write(cr,uid,obj.id,{'email_from' : email[0]})
+                    pool['project.issue'].write(cr,uid,obj.id,{'partner_id' : email[1]})
                     is_project_found = True
                     break
             if is_project_found:
@@ -37,17 +38,18 @@ if projects:
 is_project_found = False
 if projects:
     for project in pool['project.project'].browse(cr, uid, projects):
-        if project.analytic_account_id.partner_id:
+        if project.analytic_account_id.partner_id and 'bl' in project.analytic_account_id.name.lower():
             project_emails = []
-            if project.analytic_account_id.partner_id.email:
-                project_emails.append(project.analytic_account_id.partner_id.email.lower())
             for partner in project.analytic_account_id.partner_id.child_ids:
                 if partner.email:
-                    project_emails.append(partner.email.lower())
+                    project_emails.append([partner.email.lower(), partner.id])
+            if project.analytic_account_id.partner_id.email:
+                project_emails.append([project.analytic_account_id.partner_id.email.lower(), project.analytic_account_id.partner_id.id])        
             for email in project_emails:
-                if email in obj.email_from.lower():
+                if email[0] in obj.email_from.lower():
                     pool['project.issue'].write(cr,uid,obj.id,{'project_id' : project.id})
-                    pool['project.issue'].write(cr,uid,obj.id,{'email_from' : project.analytic_account_id.partner_id.email.lower()})
+                    pool['project.issue'].write(cr,uid,obj.id,{'email_from' : email[0]})
+                    pool['project.issue'].write(cr,uid,obj.id,{'partner_id' : email[1]})
                     is_project_found = True
                     break
             if is_project_found:
@@ -55,7 +57,7 @@ if projects:
 teams = pool['account.analytic.account.team'].search(cr, uid, [('name','=','SM')])
 if teams:
     team = pool['account.analytic.account.team'].browse(cr, uid, teams[0])
-    content = '&lt;p&gt;Hello SMs,&lt;/p&gt;&lt;p&gt;A new ticket has been sent by email to "support".&lt;/p&gt;&lt;p&gt;An issue has been created in Odoo.&lt;/p&gt;&lt;p&gt;Please take some time to check it.&lt;/p&gt;&lt;p&gt; Click &lt;a href="https://my.abakusitsolutions.eu/web#id=' + str(obj.id) + '&view_type=form&model=project.issue&menu_id=559&action=738"&gt;here&lt;/a&gt; &lt;/p&gt;&lt;p&gt;Your Odoo Guru&lt;/p&gt;'
+    content = '&lt;p&gt;Hello SMs,&lt;/p&gt;&lt;p&gt;A new ticket has been sent by email to "support".&lt;/p&gt;&lt;p&gt;An issue has been created in Odoo.&lt;/p&gt;&lt;p&gt;Please take some time to check it.&lt;/p&gt;&lt;p&gt; Click &lt;a href="https://my.abakusitsolutions.eu/web#id=' + str(obj.id) + '&amp;view_type=form&amp;model=project.issue&amp;menu_id=559&amp;action=738"&gt;here&lt;/a&gt; &lt;/p&gt;&lt;p&gt;Your Odoo Guru&lt;/p&gt;'
     content = pool['mail.mail'].unescapeHTML(content)
     if obj.partner_id and obj.partner_id.name:
         partner_info = obj.partner_id.name

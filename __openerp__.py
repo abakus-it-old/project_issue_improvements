@@ -7,12 +7,6 @@
     'category': 'Contract',
     'description': 
     """
-    Latest UPDATES 2015-04-13:
-        - Merging modules in this module: 
-            - project_issue_remove_star_widget
-            - project_issue_form
-        - New server action for email matching.
-
     This modules adds some functionalities to the issues for AbAKUS. 
 
     Functionalities:
@@ -28,6 +22,18 @@
         - Replaces priority stars in kanban view by the priority name.
 
     This module has been developed by Bernard Delhez, intern @ AbAKUS it-solutions, under the control of Valentin Thirion.
+    
+    Latest UPDATES 2015-08-07:
+        - corrections in 2 server actions:
+            - contact is set now
+            - BL project check
+            - check partner contacts email then partner email
+
+    UPDATES 2015-04-13:
+        - Merging modules in this module: 
+            - project_issue_remove_star_widget
+            - project_issue_form
+        - New server action for email matching.
     """,
     'data': ['view/project_issue_view.xml','ir_actions_server_data.xml'],
 }
