@@ -35,5 +35,5 @@
             - project_issue_form
         - New server action for email matching.
     """,
-    'data': ['view/project_issue_view.xml','ir_actions_server_data.xml'],
+    'data': ['view/project_issue_view.xml','ir_actions_server_data.xml','project_issue_email_template.xml'],
 }
