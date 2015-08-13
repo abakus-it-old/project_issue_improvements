@@ -12,10 +12,15 @@ Functionalities:
     - Removes "Issues" menuitem from the project module.
     - Replaces priority stars selection by a normal name selection in the issue form.
     - Replaces priority stars in kanban view by the priority name.
+    - Domain: only select project where the analytic account stage is open
 
 This module has been developed by Bernard Delhez, intern @ AbAKUS it-solutions, under the control of Valentin Thirion.
 
-Latest UPDATES 2015-08-07:
+Latest UPDATES 2015-08-13:
+    - Domain: only select projects where the analytic account stage is open
+    - 2 server action: only select projects where the analytic account stage is open
+    
+UPDATES 2015-08-07:
     - corrections in 2 server actions:
         - contact is set now
         - BL project check
