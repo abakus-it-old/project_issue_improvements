@@ -11,7 +11,7 @@
 is_project_found = False
 if projects:
     for project in pool['project.project'].browse(cr, uid, projects):
-        if project.analytic_account_id.partner_id and 'bl' in project.analytic_account_id.name.lower():
+        if project.analytic_account_id.state == 'open' and project.analytic_account_id.partner_id and 'bl' in project.analytic_account_id.name.lower():
             project_emails = []
             for partner in project.analytic_account_id.partner_id.child_ids:
                 if partner.email:
@@ -51,7 +51,7 @@ if projects:
 is_project_found = False
 if projects:
     for project in pool['project.project'].browse(cr, uid, projects):
-        if project.analytic_account_id.partner_id and 'bl' in project.analytic_account_id.name.lower():
+        if project.analytic_account_id.state == 'open' and project.analytic_account_id.partner_id and 'bl' in project.analytic_account_id.name.lower():
             project_emails = []
             for partner in project.analytic_account_id.partner_id.child_ids:
                 if partner.email:
