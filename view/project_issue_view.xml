@@ -1,12 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <openerp>
 	<data>
-        <!-- Move the Project field and add the due date -->
+        
         <record model="ir.ui.view" id="project_issue_project">
             <field name="name">project.issue.remove.project</field>
             <field name="model">project.issue</field>
             <field name="inherit_id" ref="project_issue.project_issue_form_view"/>
             <field name="arch" type="xml">
+                
+                <!-- Moves the Project field and add the due date -->
                 <xpath expr="(//sheet[@string='Issue']/group/group/div)[1]" position="replace"/>
                 <xpath expr="//label[@for='project_id']" position="replace"/>
                 
@@ -21,6 +23,15 @@
                 <xpath expr="//field[@name='priority']" position="after">
                         <field name="due_date"/>
                 </xpath>
+                
+                
+                <!-- Adds the custommer feedback -->
+                <page string="Extra Info" position="after">
+                    <page string="Customer Feedback">
+                        <field name="customer_feedback"/>
+                    </page>
+                </page>
+                
             </field>
         </record>
         

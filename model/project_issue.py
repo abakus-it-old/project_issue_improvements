@@ -3,6 +3,7 @@
 class project_issue_improvements(models.Model):
     _inherit = ['project.issue']
     due_date = fields.Date('Due date')
+    customer_feedback = fields.Text('Customer Feedback')
 
     @api.onchange('user_id','project_id','email_from')
     def change_assignation_state(self):
