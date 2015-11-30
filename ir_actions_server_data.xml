@@ -21,6 +21,7 @@ if projects:
             for email in project_emails:
                 if email[0] in obj.email_from.lower():
                     pool['project.issue'].write(cr,uid,obj.id,{'project_id' : project.id})
+                    pool['project.issue'].write(cr,uid,obj.id,{'analytic_account_id' : project.analytic_account_id.id})
                     pool['project.issue'].write(cr,uid,obj.id,{'email_from' : email[0]})
                     pool['project.issue'].write(cr,uid,obj.id,{'partner_id' : email[1]})
                     pool['project.issue'].write(cr,uid,obj.id,{'priority' : '1'})
@@ -62,6 +63,7 @@ if projects:
             for email in project_emails:
                 if email[0] in obj.email_from.lower():
                     pool['project.issue'].write(cr,uid,obj.id,{'project_id' : project.id})
+                    pool['project.issue'].write(cr,uid,obj.id,{'analytic_account_id' : project.analytic_account_id.id})
                     pool['project.issue'].write(cr,uid,obj.id,{'email_from' : email[0]})
                     pool['project.issue'].write(cr,uid,obj.id,{'partner_id' : email[1]})
                     
