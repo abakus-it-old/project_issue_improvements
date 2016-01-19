@@ -3,7 +3,7 @@
 	<data>
         
         <record model="ir.ui.view" id="project_issue_project">
-            <field name="name">project.issue.remove.project</field>
+            <field name="name">project.issue.reorganise</field>
             <field name="model">project.issue</field>
             <field name="inherit_id" ref="project_issue.project_issue_form_view"/>
             <field name="arch" type="xml">
@@ -11,19 +11,40 @@
                 <!-- Moves the Project field and add the due date -->
                 <xpath expr="(//sheet[@string='Issue']/group/group/div)[1]" position="replace"/>
                 <xpath expr="//label[@for='project_id']" position="replace"/>
-                
-                <xpath expr="//sheet[@string='Issue']/h1" position="after">
+                <field name="partner_id" position="replace" />
+                <field name="email_from" position="replace" />
+
+                <!-- Move the project field to the first position + contact name + email -->
+                <xpath expr="//sheet[@string='Issue']/h1" position="before">
                     <label for="project_id"/>
-                    <div style="width:272px;">
-                        <field name="project_id" on_change="on_change_project(project_id)" class="oe_inline" context="{'default_use_issues':1}" domain="[('analytic_account_id.state','=','open')]"/>
+                    <div style="width:50%;">
+                        <h2>
+                            <field name="project_id" on_change="on_change_project(project_id)" class="oe_inline" context="{'default_use_issues':1}" domain="[('analytic_account_id.state','=','open')]"/>
+                        </h2>
                         <button name="case_escalate" string="⇒ Escalate" type="object" class="oe_link" groups="base.group_user"/>
                     </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" />
+                        </group>
+                        <group>
+                            <field name="email_from" />
+                        </group>
+                    </group>
+                    <label for="name" />
                 </xpath>
 
                 <xpath expr="//field[@name='priority']" position="after">
-                        <field name="due_date"/>
+                    <field name="due_date"/>
                 </xpath>
-                
+
+                <!-- Reorganize the other fields -->
+                <field name="priority" position="replace" />
+                <field name="due_date" position="replace" />
+                <field name="user_id" position="after">
+                    <field name="priority" />
+                    <field name="due_date" />
+                </field>
                 
                 <!-- Adds the custommer feedback -->
                 <page string="Extra Info" position="after">
