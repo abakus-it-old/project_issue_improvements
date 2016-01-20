@@ -23,8 +23,11 @@
         - Domain: only select project where the analytic account stage is open
 
     This module has been developed by Bernard Delhez, intern @ AbAKUS it-solutions, under the control of Valentin Thirion.
-    
-    Latest UPDATES 2015-08-13:
+
+    UPDATE 2016-01-20:
+        - convert issue to task
+
+    UPDATES 2015-08-13:
         - Domain: only select projects where the analytic account stage is open
         - 2 server action: only select projects where the analytic account stage is open
         
