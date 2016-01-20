@@ -16,7 +16,10 @@ Functionalities:
 
 This module has been developed by Bernard Delhez, intern @ AbAKUS it-solutions, under the control of Valentin Thirion.
 
-Latest UPDATES 2015-11-05:
+UPDATE 2016-01-20:
+    - convert issue to task
+
+UPDATES 2015-11-05:
     - email template for SM
 
 UPDATES 2015-08-13:

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <openerp>
 	<data>
         
@@ -52,7 +52,15 @@
                         <field name="customer_feedback"/>
                     </page>
                 </page>
-                
+
+                <!-- Conversion to task stuff -->
+                <field name="stage_id" position="after">
+                    <button name="convert_to_task" type="object" class="oe_highlight" string="Convert to Task" />
+                    <button name="open_converted_task" type="object" class="oe_highlight" string="Open converted Task" attrs="{'invisible':[('converted_task_state', '!=', '')]}" />
+                </field>
+                <field name="task_id" position="after">
+                    <field name="converted_task_state" attrs="{'invisible':[('task_id', '=', 'None')]}" />
+                </field>
             </field>
         </record>
         

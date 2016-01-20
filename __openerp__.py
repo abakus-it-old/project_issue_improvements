@@ -1,4 +1,4 @@
-﻿{
+{
     'name': "AbAKUS issue improvements",
     'version': '1.0',
     'depends': ['project_issue'],
@@ -24,10 +24,7 @@
 
     This module has been developed by Bernard Delhez, intern @ AbAKUS it-solutions, under the control of Valentin Thirion.
     
-    Latest UPDATES 2015-11-05:
-    - email template for SM
-
-    UPDATES 2015-08-13:
+    Latest UPDATES 2015-08-13:
         - Domain: only select projects where the analytic account stage is open
         - 2 server action: only select projects where the analytic account stage is open
         
@@ -43,5 +40,11 @@
             - project_issue_form
         - New server action for email matching.
     """,
-    'data': ['view/project_issue_view.xml','ir_actions_server_data.xml','project_issue_email_template.xml'],
+    'data': [
+        'view/project_issue_view.xml',
+        'view/project_task_view.xml',
+        'ir_actions_server_data.xml',
+        'project_issue_email_template.xml',
+        'project_task_stage.xml',
+    ],
 }
