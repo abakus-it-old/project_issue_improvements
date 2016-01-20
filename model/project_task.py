@@ -10,10 +10,7 @@ class task_from_issue(models.Model):
 
     @api.onchange('origin_issue')
     def _compute_origin_issue_state(self):
-        if self.origin_issue.id != False and self.origin_issue.name != '':
-            self.origin_issue_state = self.origin_issue.stage_id.name
+        for issue in self:
+            if issue.origin_issue.id != False and issue.origin_issue.name != '':
+                issue.origin_issue_state = issue.origin_issue.stage_id.name
 
-    @api.multi
-    def open_origin_issue(self):
-        if self.origin_issue != None:
-            print("open")
