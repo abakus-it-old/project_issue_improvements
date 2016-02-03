@@ -14,7 +14,7 @@
 subtype_obj = pool['mail.message.subtype']
 discussion = subtype_obj .search(cr,uid,[('name','=','Discussions')], context=context) # DISCUSSION
 discussion = subtype_obj .browse(cr, uid, discussion[0])
-stage_changed = subtype_obj .search(cr,uid,[('name','=','Stage Changed')], context=context) # STAGE CHANGED
+stage_changed = subtype_obj .search(cr,uid,[('res_model', '=', 'project.issue'), ('name','=','Stage Changed')], context=context) # STAGE CHANGED
 stage_changed = subtype_obj .browse(cr, uid, stage_changed[0])
 assigned = subtype_obj .search(cr,uid,[('name','=','Issue Assigned')], context=context) # ASSIGNED
 assigned  = subtype_obj .browse(cr, uid, assigned [0])
