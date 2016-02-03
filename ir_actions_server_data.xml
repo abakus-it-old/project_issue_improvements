@@ -7,7 +7,29 @@
             <field name="state">code</field>
             <field name="condition">True</field>
             <field name="sequence">5</field>
-            <field name="code">projects = pool['project.project'].search(cr, uid, [('active','=',True)])
+            <field name="code">
+
+ # - Set followers and subtypes
+
+subtype_obj = pool['mail.message.subtype']
+discussion = subtype_obj .search(cr,uid,[('name','=','Discussions')], context=context) # DISCUSSION
+discussion = subtype_obj .browse(cr, uid, discussion[0])
+stage_changed = subtype_obj .search(cr,uid,[('name','=','Stage Changed')], context=context) # STAGE CHANGED
+stage_changed = subtype_obj .browse(cr, uid, stage_changed[0])
+assigned = subtype_obj .search(cr,uid,[('name','=','Issue Assigned')], context=context) # ASSIGNED
+assigned  = subtype_obj .browse(cr, uid, assigned [0])
+
+mail_followers_obj = pool['mail.followers']
+mail_followers = mail_followers_obj.search(cr,uid,[('res_model','=','project.issue'),('res_id','=',obj.id)],context=context)
+if mail_followers:
+    for follow in mail_followers_obj.browse(cr, uid, mail_followers):
+        mail_followers_obj .write(cr,uid,follow.id,{'subtype_ids':[[4, discussion.id, False]]})
+        mail_followers_obj .write(cr,uid,follow.id,{'subtype_ids':[[4, stage_changed.id, False]]})
+        mail_followers_obj .write(cr,uid,follow.id,{'subtype_ids':[[4, assigned  .id, False]]})
+
+# - Project Matching
+
+projects = pool['project.project'].search(cr, uid, [('active','=',True)])
 is_project_found = False
 if projects:
     for project in pool['project.project'].browse(cr, uid, projects):
