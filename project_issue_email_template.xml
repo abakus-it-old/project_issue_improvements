@@ -19,7 +19,7 @@
             <field name="subject">New issue created from ${(object.partner_id.name or 'UNKNOWN (create new contact in projects partner)')|safe}</field>
             <field name="model_id" ref="project_issue.model_project_issue"/>
             <field name="auto_delete" eval="True"/>
-            <field name="body_html">Hello,<div><br></div><div>A new Issue has been created by email in Odoo.</div><div><br></div><div>Title: ${object.name}</div><div>Author: ${object.email_from}</div><div>Project: ${(object.project_id.name or 'no project')|safe}</div><div><br></div><div>Link: <a href="https://my.abakusitsolutions.eu/web#id=${object.id}&amp;view_type=form&amp;model=project.issue&amp;menu_id=558&amp;action=737">click here</a></div><div>(https://my.abakusitsolutions.eu/web#id=${object.id}&amp;view_type=form&amp;model=project.issue&amp;menu_id=558&amp;action=737)</div><div><br></div><div>Thanks&nbsp;</div><div><br></div><div>The Odoo System</div></field>
+            <field name="body_html">Hello,<br/><div>A new Issue has been created by email in Odoo.</div><div><br></div><div>Title: ${object.name}</div><div>Author: ${object.email_from}</div><div>Project: ${(object.project_id.name or 'no project')|safe}</div><div><br></div><div>Link: <a href="https://my.abakusitsolutions.eu/web#id=${object.id}&amp;view_type=form&amp;model=project.issue&amp;menu_id=558&amp;action=737">click here</a></div><div>(https://my.abakusitsolutions.eu/web#id=${object.id}&amp;view_type=form&amp;model=project.issue&amp;menu_id=558&amp;action=737)</div><div><br></div><div>Thanks&nbsp;</div><div><br></div><div>The Odoo System</div></field>
         </record>
     </data>
 </openerp>
