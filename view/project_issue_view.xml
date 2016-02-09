@@ -60,6 +60,11 @@
                 <field name="task_id" position="after">
                     <field name="converted_task_state" attrs="{'invisible':[('task_id', '=', 'None')]}" />
                 </field>
+
+		<!-- Change the group access rights for some fields -->
+                <field name="priority" position="replace">
+                    <field name="priority" />
+                </field>
             </field>
         </record>
         
