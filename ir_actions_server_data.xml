@@ -100,7 +100,9 @@ if mail_followers:
 # - Project Matching
 
 generic_email_suffixes = ['gmail.com', 'hotmail.com', 'skyet.be', 'live.com', 'hotmail.fr', 'yahoo.com', 'yahoo.fr']
-
+email_match = False
+email_match_email = ''
+email_match_partner_id = None
 
 projects = pool['project.project'].search(cr, uid, [('active','=',True)])
 is_project_found = False
@@ -117,10 +119,6 @@ if projects:
             email_suffix = obj.email_from.split("@")[1].lower()
             email_suffix = email_suffix.replace('>', '')
             email_suffix = email_suffix.replace('<', '')
-
-            email_match = False
-            email_match_email = ''
-            email_match_partner_id = None
 
             # Try to find the partner using its email from our contacts
             for email in project_emails:
@@ -147,26 +145,28 @@ if projects:
                 if email_match_partner_id == None:
                     pool['project.issue'].write(cr,uid,obj.id,{'description' : 'WARNING ! THIS SENDER HAS NO CONTACT LINKED, CREATE ONE PLEASE\nEMAIL: ' + email_match_email})
                     
-                #Project issue - Email matching answer
-                email_template_obj = pool['email.template']
-                template_ids = email_template_obj.search(cr, uid, [('name', '=','Project issue - Email matching answer')], context=context) 
-                if template_ids:
-                    values = email_template_obj.generate_email(cr, uid, template_ids[0], obj.id, context=context)
-                    #values['subject'] = subject; values['body_html'] = body_html; values['body'] = body_html
-                    values['email_to'] = email_match_email
-                    mail_mail_obj = pool['mail.mail']
-                    msg_id = mail_mail_obj.create(cr, uid, values, context=context)
-                    if msg_id:
-                        mail = mail_mail_obj.browse(cr, uid, msg_id)
-                        project_issue_obj = pool['project.issue']
-                        issue = project_issue_obj .browse(cr, uid, obj.id)
-                        issue.message_post(subject='Matching answer', body=mail.body_html)
-                        mail_mail_obj.send(cr, uid, [msg_id], context=context)
-
                 is_project_found = True
 
         if is_project_found:
             break
+
+# - Send EMAIL Confirmation
+
+#Project issue - Email matching answer
+email_template_obj = pool['email.template']
+template_ids = email_template_obj.search(cr, uid, [('name', '=','Project issue - Email matching answer')], context=context) 
+if template_ids:
+    values = email_template_obj.generate_email(cr, uid, template_ids[0], obj.id, context=context)
+    #values['subject'] = subject; values['body_html'] = body_html; values['body'] = body_html
+    values['email_to'] = obj.email_from
+    mail_mail_obj = pool['mail.mail']
+    msg_id = mail_mail_obj.create(cr, uid, values, context=context)
+    if msg_id:
+        mail = mail_mail_obj.browse(cr, uid, msg_id)
+        project_issue_obj = pool['project.issue']
+        issue = project_issue_obj .browse(cr, uid, obj.id)
+        issue.message_post(subject='Matching answer', body=mail.body_html)
+        mail_mail_obj.send(cr, uid, [msg_id], context=context)
 
 # - Alert to SMs
 
