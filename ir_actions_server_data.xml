@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
         <record id="project_issue_email_matching" model="ir.actions.server">
@@ -42,8 +42,8 @@ if projects:
                 project_emails.append([project.analytic_account_id.partner_id.email.lower(), project.analytic_account_id.partner_id.id])        
 
             email_suffix = obj.email_from.split("@")[1].lower()
-            email_suffix = email_suffix.replace('>', '')
-            email_suffix = email_suffix.replace('<', '')
+            email_suffix = email_suffix.replace('&gt;', '')
+            email_suffix = email_suffix.replace("&lt;", "")
 
             for email in project_emails:
                 if email[0] in obj.email_from.lower() or (email[0].find(email_suffix) > 0):
@@ -55,7 +55,7 @@ if projects:
                     pool['project.issue'].write(cr,uid,obj.id,{'priority' : '1'})
                     
                     #Project issue - Email matching answer
-                    email_template_obj = pool['email.template']
+                    email_template_obj = pool['mail.template']
                     template_ids = email_template_obj.search(cr, uid, [('name', '=','Project issue - Email matching answer')], context=context) 
                     if template_ids:
                         values = email_template_obj.generate_email(cr, uid, template_ids[0], obj.id, context=context)
@@ -117,8 +117,8 @@ if projects:
                 project_emails.append([project.analytic_account_id.partner_id.email.lower(), project.analytic_account_id.partner_id.id])        
 
             email_suffix = obj.email_from.split("@")[1].lower()
-            email_suffix = email_suffix.replace('>', '')
-            email_suffix = email_suffix.replace('<', '')
+            email_suffix = email_suffix.replace('&gt;', '')
+            email_suffix = email_suffix.replace('&lt;', '')
 
             # Try to find the partner using its email from our contacts
             for email in project_emails:
@@ -153,7 +153,7 @@ if projects:
 # - Send EMAIL Confirmation
 
 #Project issue - Email matching answer
-email_template_obj = pool['email.template']
+email_template_obj = pool['mail.template']
 template_ids = email_template_obj.search(cr, uid, [('name', '=','Project issue - Email matching answer')], context=context) 
 if template_ids:
     values = email_template_obj.generate_email(cr, uid, template_ids[0], obj.id, context=context)
@@ -175,7 +175,7 @@ if teams:
     team = pool['account.analytic.account.team'].browse(cr, uid, teams[0])
     for user in team.users:
         if user.email:
-            email_template_obj = pool['email.template']
+            email_template_obj = pool['mail.template']
             template_ids = email_template_obj.search(cr, uid, [('name', '=','Project issue - New issue email to SM')], context=context) 
             if template_ids:
                 values = email_template_obj.generate_email(cr, uid, template_ids[0], obj.id, context=context)

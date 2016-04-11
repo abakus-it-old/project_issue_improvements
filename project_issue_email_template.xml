@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <openerp>
     <data>
-        <record id="email_template_issue_email_matching_answer" model="email.template">
+        <record id="email_template_issue_email_matching_answer" model="mail.template">
             <field name="name">Project issue - Email matching answer</field>
             <field name="email_from">${(object.user_id.email or 'noreply@abakusitsolutions.eu')|safe}</field>
             <field name="subject">subject_email_template_issue_email_matching_answer</field>
@@ -13,7 +13,7 @@
         </record>
     </data>
     <data>
-        <record id="email_template_new_issue_email_to_SM" model="email.template">
+        <record id="email_template_new_issue_email_to_SM" model="mail.template">
             <field name="name">Project issue - New issue email to SM</field>
             <field name="email_from">${(object.user_id.email or 'noreply@abakusitsolutions.eu')|safe}</field>
             <field name="subject">New issue created from ${(object.partner_id.name or 'UNKNOWN (create new contact in projects partner)')|safe}</field>
