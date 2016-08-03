@@ -9,7 +9,12 @@ class project_issue_improvements(models.Model):
     due_date = fields.Date('Due date')
     customer_feedback = fields.Text('Customer Feedback')
     converted_task_state = fields.Char(string="Converted Task State", compute="_compute_converted_task_state")
-    sale_subscription_id = fields.Many2one(comodel_name='sale.subscription',string="Subscription",related='project_id.sale_subscription_id', store=False)
+    sale_subscription_id = fields.Many2one(comodel_name='sale.subscription',string="Subscription",compute='_compute_sale_subscription')
+
+    @api.one
+    def _compute_sale_subscription(self):
+        if self.project_id.sale_subscription_id :
+            self.sale_subscription_id = self.project_id.sale_subscription_id
 
     @api.one
     @api.onchange('task_id')
