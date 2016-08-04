@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
 	<data>
-
         <record model="ir.ui.view" id="project_issue_project">
             <field name="name">project.issue.reorganise</field>
             <field name="model">project.issue</field>
             <field name="inherit_id" ref="project_issue.project_issue_form_view"/>
             <field name="arch" type="xml">
 
-                <!-- Move the project field to the first position + contact name + email
-
+                <!-- Move the project field to the first position + contact name + email -->
                 <xpath expr="//sheet/div[@class='oe_title']" position="replace">
                     <group string="Global info">
                         <group>
@@ -24,15 +22,13 @@
                     <h2><field name="name" /></h2>
                     <hr />
                 </xpath>
-                -->
 
-                <!-- Reorganize the other fields
+                <!-- Reorganize the other fields -->
                 <field name="priority" position="replace" />
                 <field name="user_id" position="after">
                     <field name="priority" />
                     <field name="due_date" />
                 </field>
-                -->
 
                 <!-- Adds the custommer feedback -->
                 <xpath expr="//notebook[last()]" position="inside">
@@ -41,20 +37,13 @@
                     </page>
                 </xpath>
 
-                <!-- Conversion to task stuff
+                <!-- Conversion to task stuff -->
                 <field name="stage_id" position="after">
                     <button name="convert_to_task" type="object" class="oe_highlight" string="Convert to Task" attrs="{'invisible':[('task_id', '!=', False)]}"/>
                 </field>
                 <field name="task_id" position="after">
                     <field name="converted_task_state" attrs="{'invisible':[('task_id', '=', 'None')]}" />
                 </field>
-                -->
-
-                <!-- Escalade
-                <field name="stage_id" position="after">
-                    <button name="case_escalate" string=" Escalate" type="object" groups="base.group_user"/>
-                </field>
-                -->
 		    </field>
         </record>
         

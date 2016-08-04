@@ -29,11 +29,15 @@ class project_issue_improvements(models.Model):
                 _logger.debug("Already converted to task: %s-%s", issue.task_id, issue.task_id.name)
                 return
 
+            priority = issue.priority
+            if priority == 2:
+                priority = 1
+
             # create the taks & set the infos
             new_task_id = self.pool.get('project.task').create(self.env.cr, self.env.uid, {
                     'name': 'Issue #' + str(issue.id) + ": " + issue.name,
                     'project_id': issue.project_id.id,
-                    'priority': issue.priority,
+                    'priority': priority,
                     'description': issue.description,
                     'user_id': issue.user_id.id,
                     'date_deadline': issue.due_date,
