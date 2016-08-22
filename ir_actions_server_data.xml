@@ -33,7 +33,7 @@ projects = pool['project.project'].search(cr, uid, [('active','=',True)])
 is_project_found = False
 if projects:
     for project in pool['project.project'].browse(cr, uid, projects):
-        if project.analytic_account_id.state == 'open' and project.analytic_account_id.partner_id and 'bl' in project.analytic_account_id.name.lower():
+        if (not project.analytic_account_id.first_subscription_id or (project.analytic_account_id.first_subscription_id and project.analytic_account_id.first_subscription_id.state == 'open') and project.analytic_account_id.partner_id and 'bl' in project.analytic_account_id.name.lower():
             project_emails = []
             for partner in project.analytic_account_id.partner_id.child_ids:
                 if partner.email:
